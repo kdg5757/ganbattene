@@ -1,20 +1,34 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import Home from './src/Home';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+// メインメニュー
+import QuestionList from './src/menu/question/QuestionList';
+import SaveQuestList from './src/menu/question/SaveQuestList';
+import Setting from './src/menu/setting/Setting';
+
+// 科目メニュー
+import MathList from './src/subject/math/index';
+import Arithmetic from './src/subject/math/arithmetic';
+
+// 採点結果
+import ScoringResult from './src/scoring-result';
+
+const Stack = createStackNavigator();
+
+export default function App(): JSX.Element {
+    return (
+        <NavigationContainer>
+            <Stack.Navigator initialRouteName="Home">
+                <Stack.Screen name="Home" component={Home} options={{ title: 'メニュー' }} />
+                <Stack.Screen name="Question" component={QuestionList} options={{ title: '科目選択' }} />
+                <Stack.Screen name="Setting" component={Setting} options={{ title: '設定' }} />
+                <Stack.Screen name="MathList" component={MathList} options={{ title: '数学' }} />
+                <Stack.Screen name="Arithmetic" component={Arithmetic} options={{ title: '算数' }} />
+                <Stack.Screen name="ScoringResult" component={ScoringResult} options={{ title: '採点結果', headerShown: false, gestureEnabled: false }} />
+                <Stack.Screen name="SaveQuestList" component={SaveQuestList} options={{ title: '問題リスト' }} />
+            </Stack.Navigator>
+        </NavigationContainer>
+    );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
